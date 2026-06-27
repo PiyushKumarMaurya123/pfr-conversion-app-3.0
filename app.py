@@ -26,13 +26,18 @@ BAR_COLORS = ["#27406b", "#2f6f8f", "#3aa996", "#c79248"]  # RM4, RM2, RM5, RM3
 @st.cache_resource
 def load_bundle():
     """Load the pickled bundle; rebuild from source if it can't be unpickled
-    (e.g. a different scikit-learn version on the host). Instant at n=35."""
+    (e.g. a different scikit-learn version on the host) OR if its feature list
+    is stale (data_utils.FEATURES changed but the .joblib wasn't re-pushed).
+    Instant at n=35, so rebuilding is always safe."""
+    from train import build_bundle
     if os.path.exists(BUNDLE_PATH):
         try:
-            return joblib.load(BUNDLE_PATH)
+            b = joblib.load(BUNDLE_PATH)
+            if list(b.get("features", [])) == list(FEATURES):
+                return b
+            # stale bundle -> fall through and rebuild from current FEATURES
         except Exception:
             pass
-    from train import build_bundle
     return build_bundle()
 
 
