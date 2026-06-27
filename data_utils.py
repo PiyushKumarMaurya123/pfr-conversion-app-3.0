@@ -13,19 +13,10 @@ DATA_FILE = "Model_1_0_Data.xlsx"
 # The three average-rate columns (RM1+RM2, RM2, RM3) are EXCLUDED per spec.
 # Constant columns (Avg RM3 density, Pipe Diameter, Volume) are dropped automatically.
 FEATURES = [
-    "RM1+RM2 in (Kg)",
-    "Total RM1 in (Kg)",
-    "Total RM2 in (Kg)",
-    "RM3 in (Kg)",
-    "Time (hrs)",
-    "Average RM1 rate (Kg/hr)",
-    "Average RM1 density (Kg/m3)",
-    "Average RM2 density (Kg/m3)",
-    "RM3 MR wrt RM1",
-    "Pipe Length (m)",
-    "Residence time (sec)",
     "Mixing/PFR inlet temperature (degC)",
     "PFR Inlet Pressure (Kg/cm2g)",
+    "RM3 MR wrt RM1",
+    "Residence time (sec)",
 ]
 
 # Friendlier labels for the UI

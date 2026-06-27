@@ -29,9 +29,11 @@ limitation, not a modelling bug. The app makes this explicit instead of hiding i
   fact derived from the liquid/vapour split).
 - **Excluded per spec:** average RM1+RM2 rate, average RM2 rate, average RM3 rate.
 - **Constant columns dropped automatically:** avg RM3 density, pipe diameter, volume.
-- **13 features used:** RM1+RM2, Total RM1, Total RM2, RM3, run time, avg RM1 rate,
-  avg RM1 density, avg RM2 density, RM3 MR wrt RM1, pipe length, residence time,
-  inlet temperature, inlet pressure.
+- **13 features available, reduced to 4.** Feature selection showed that
+  composition accuracy (mean LOOCV R² ≈ 0.55) is almost entirely carried by
+  four inlet variables; the other nine add negligible signal (collinear or weak).
+  **Inputs used:** PFR inlet temperature, PFR inlet pressure, RM3 molar ratio
+  wrt RM1, residence time.
 - **Models:** Ridge regression on standardised features. α=5 for composition
   (multi-output), α=30 for conversion (heavily regularised so it behaves honestly
   near the mean). Evaluated by **leave-one-out CV** — the only honest scheme at n=35.
