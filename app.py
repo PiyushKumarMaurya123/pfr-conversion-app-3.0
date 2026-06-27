@@ -22,7 +22,17 @@ BUNDLE_PATH = "model_bundle.joblib"
 
 @st.cache_resource
 def load_bundle():
-    return joblib.load(BUNDLE_PATH)
+    """Load the pre-trained bundle; if it can't be unpickled (e.g. a different
+    scikit-learn version on the host), rebuild it from the source data instead.
+    Training on 35 rows is near-instant, so this is a safe, transparent fallback."""
+    import os
+    if os.path.exists(BUNDLE_PATH):
+        try:
+            return joblib.load(BUNDLE_PATH)
+        except Exception:
+            pass  # version mismatch / corrupt -> retrain below
+    from train import build_bundle
+    return build_bundle()
 
 
 bundle = load_bundle()
